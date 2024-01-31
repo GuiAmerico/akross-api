@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+  <!-- Create tb_company Table -->
+  <changeSet id="create-tb_company" author="owner">
+    <createTable tableName="tb_company">
+      <column name="id" type="char(36)">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="active" type="bit(1)" defaultValue="1"/>
+      <column name="created_date" type="datetime(6)"/>
+      <column name="cnpj" type="varchar(255)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="photo_file_path" type="varchar(255)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="photo_content_type" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="street_address" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="city" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="state" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="postal_code" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="complement" type="varchar(255)"/>
+      <column name="number" type="int">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <!-- Create tb_collaborator Table -->
+  <changeSet id="create-tb_collaborator" author="owner">
+    <createTable tableName="tb_collaborator">
+      <column name="id" type="char(36)">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="active" type="bit(1)" defaultValue="1"/>
+      <column name="created_date" type="datetime(6)"/>
+      <column name="cpf" type="varchar(255)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="email" type="varchar(255)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="phone" type="varchar(255)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="photo_file_path" type="varchar(255)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="photo_content_type" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="company_id" type="char(36)"/>
+    </createTable>
+  </changeSet>
+
+  <!-- Create tb_squad Table -->
+  <changeSet id="create-tb_squad" author="owner">
+    <createTable tableName="tb_squad">
+      <column name="id" type="char(36)">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="active" type="bit(1)" defaultValue="1"/>
+      <column name="created_date" type="datetime(6)"/>
+      <column name="name" type="varchar(255)" >
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="company_id" type="char(36)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <!-- Create tb_collaborator_squad Table -->
+  <changeSet id="create-tb_squads_collaborators" author="owner">
+    <createTable tableName="tb_squads_collaborators">
+      <column name="collaborator_id" type="char(36)">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="squad_id" type="char(36)">
+        <constraints primaryKey="true"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint
+      baseTableName="tb_squads_collaborators"
+      baseColumnNames="collaborator_id"
+      constraintName="FK_collaborator_id"
+      referencedTableName="tb_collaborator"
+      referencedColumnNames="id"
+    />
+    <addForeignKeyConstraint
+      baseTableName="tb_squads_collaborators"
+      baseColumnNames="squad_id"
+      constraintName="FK_squads_id_tb_collaborator_squad"
+      referencedTableName="tb_squad"
+      referencedColumnNames="id"
+    />
+  </changeSet>
+</databaseChangeLog>
