@@ -116,8 +116,10 @@ public class CollaboratorServiceImp implements CollaboratorService {
 
   @Override
   public void update(UUID id, UpdateCollaboratorRequest collaboratorRequest) {
+    Collaborator collaborator = collaboratorRepository.findById(id)
+      .orElseThrow(() -> new ResourceNotFoundException("Collaborator not found"));
     List<UUID> squadsId = collaboratorRequest.getAllocatedIn();
-    Collaborator collaborator = mapper.map(collaboratorRequest, Collaborator.class);
+    mapper.map(collaboratorRequest, collaborator);
     List<Squad> newSquads = new ArrayList<>();
     if (Objects.nonNull(squadsId)) {
       squadsId.forEach(
