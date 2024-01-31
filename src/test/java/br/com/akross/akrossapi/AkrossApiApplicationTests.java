@@ -1,4 +1,4 @@
-package br.com.akross.AkrossAPI;
+package br.com.akross.akrossapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
