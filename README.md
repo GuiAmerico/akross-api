@@ -6,6 +6,8 @@
 *Caso queria rodar manualmente atente-se aos requisitos:*
  - Java 17
  - Configurar MySQL
+    - username configurado: root
+    - password configurado: root
 
 ### Requests:
 
