@@ -50,18 +50,13 @@
       </column>
       <column name="active" type="bit(1)" defaultValue="1"/>
       <column name="created_date" type="datetime(6)"/>
-      <column name="cpf" type="varchar(255)">
-        <constraints nullable="false" unique="true"/>
-      </column>
-      <column name="email" type="varchar(255)">
-        <constraints nullable="false" unique="true"/>
-      </column>
+      <column name="cpf" type="varchar(255)"/>
+      <column name="email" type="varchar(255)"/>
+
       <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
-      <column name="phone" type="varchar(255)">
-        <constraints nullable="false" unique="true"/>
-      </column>
+      <column name="phone" type="varchar(255)"/>
       <column name="photo_file_path" type="varchar(255)">
         <constraints nullable="false" unique="true"/>
       </column>
@@ -80,9 +75,7 @@
       </column>
       <column name="active" type="bit(1)" defaultValue="1"/>
       <column name="created_date" type="datetime(6)"/>
-      <column name="name" type="varchar(255)" >
-        <constraints nullable="false" unique="true"/>
-      </column>
+      <column name="name" type="varchar(255)"/>
       <column name="company_id" type="char(36)">
         <constraints nullable="false"/>
       </column>

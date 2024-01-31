@@ -4,12 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-public class UploadPictureException extends RuntimeException {
+public class UploadPhotoException extends RuntimeException {
 
   private static final long serialVersionUID = 1L;
 
 
-  public UploadPictureException(String message) {
+  public UploadPhotoException(String message) {
     super(message);
   }
 }

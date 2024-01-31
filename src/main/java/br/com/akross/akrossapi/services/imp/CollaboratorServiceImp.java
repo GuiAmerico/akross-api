@@ -8,7 +8,7 @@ import br.com.akross.akrossapi.controllers.request.UpdateCollaboratorRequest;
 import br.com.akross.akrossapi.controllers.response.CollaboratorResponse;
 import br.com.akross.akrossapi.exceptions.ResourceAlreadyRegisteredException;
 import br.com.akross.akrossapi.exceptions.ResourceNotFoundException;
-import br.com.akross.akrossapi.exceptions.UploadPictureException;
+import br.com.akross.akrossapi.exceptions.UploadPhotoException;
 import br.com.akross.akrossapi.models.Collaborator;
 import br.com.akross.akrossapi.models.Company;
 import br.com.akross.akrossapi.models.Photo;
@@ -41,19 +41,12 @@ public class CollaboratorServiceImp implements CollaboratorService {
   private final SquadRepository squadRepository;
   private final ModelMapper mapper;
 
-  private static boolean isSquadBelongsToCompany(UUID squadId, Company company) {
-    return company.getSquads().stream()
-      .anyMatch(
-        companySquad -> companySquad.getId().equals(squadId)
-      );
-  }
-
   @Override
   public CollaboratorResponse hireCollaborator(
     CreateCollaboratorRequest collaboratorRequest,
     UUID companyId
   ) {
-    validCollaborator(collaboratorRequest);
+    validCollaborator(collaboratorRequest, companyId);
     Company company = companyRepository.findById(companyId)
       .orElseThrow(() -> new ResourceNotFoundException("Company not found"));
 
@@ -84,7 +77,7 @@ public class CollaboratorServiceImp implements CollaboratorService {
         filePath
       );
     } catch (IOException e) {
-      throw new UploadPictureException(e.getMessage());
+      throw new UploadPhotoException(e.getMessage());
     }
     Photo photo = new Photo(filePath, photoRequest.getPhotoContentType());
     collaborator.setPhoto(photo);
@@ -142,27 +135,34 @@ public class CollaboratorServiceImp implements CollaboratorService {
     collaboratorRepository.save(collaborator);
   }
 
-  private void validCollaborator(CreateCollaboratorRequest companyRequest) {
-    if (isCpfRegistered(companyRequest)) {
+  private void validCollaborator(CreateCollaboratorRequest createCollaboratorRequest, UUID companyId) {
+    if (isCpfRegistered(createCollaboratorRequest,companyId)) {
       throw new ResourceAlreadyRegisteredException("CPF already registered");
     }
-    if (isEmailRegistered(companyRequest)) {
+    if (isEmailRegistered(createCollaboratorRequest,companyId)) {
       throw new ResourceAlreadyRegisteredException("Email already registered");
     }
-    if (isPhoneRegistered(companyRequest)) {
+    if (isPhoneRegistered(createCollaboratorRequest,companyId)) {
       throw new ResourceAlreadyRegisteredException("Phone already registered");
     }
   }
 
-  private boolean isCpfRegistered(CreateCollaboratorRequest companyRequest) {
-    return collaboratorRepository.existsByCpf(companyRequest.getCpf());
+  private boolean isCpfRegistered(CreateCollaboratorRequest companyRequest, UUID companyId) {
+    return collaboratorRepository.existsByCpf(companyRequest.getCpf(), companyId);
   }
 
-  private boolean isEmailRegistered(CreateCollaboratorRequest companyRequest) {
-    return collaboratorRepository.existsByEmail(companyRequest.getEmail());
+  private boolean isEmailRegistered(CreateCollaboratorRequest companyRequest, UUID companyId) {
+    return collaboratorRepository.existsByEmail(companyRequest.getEmail(), companyId);
   }
 
-  private boolean isPhoneRegistered(CreateCollaboratorRequest companyRequest) {
-    return collaboratorRepository.existsByPhone(companyRequest.getPhone());
+  private boolean isPhoneRegistered(CreateCollaboratorRequest companyRequest, UUID companyId) {
+    return collaboratorRepository.existsByPhone(companyRequest.getPhone(), companyId);
+  }
+
+  private static boolean isSquadBelongsToCompany(UUID squadId, Company company) {
+    return company.getSquads().stream()
+      .anyMatch(
+        companySquad -> companySquad.getId().equals(squadId)
+      );
   }
 }

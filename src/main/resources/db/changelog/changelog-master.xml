@@ -12,4 +12,5 @@
   <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
 
   <include file="/db/changelog/migrations/V001_initialize_db.xml" relativeToChangelogFile="false"/>
+  <include file="/db/changelog/migrations/V002_addUniqueKeys.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

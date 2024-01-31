@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+  <!-- Create tb_company Table -->
+  <changeSet id="add_unique_keys" author="owner">
+    <addUniqueConstraint
+      columnNames="cpf, company_id"
+      constraintName="unique_cpf_per_company_tb_collaborator"
+      tableName="tb_collaborator"
+      validate="true"
+    />
+    <addUniqueConstraint
+      columnNames="email, company_id"
+      constraintName="unique_email_per_company_tb_collaborator"
+      tableName="tb_collaborator"
+      validate="true"
+    />
+    <addUniqueConstraint
+      columnNames="phone, company_id"
+      constraintName="unique_phone_per_company_tb_collaborator"
+      tableName="tb_collaborator"
+      validate="true"
+    />
+    <addUniqueConstraint
+      columnNames="name, company_id"
+      constraintName="unique_name_per_company_tb_squad"
+      tableName="tb_squad"
+      validate="true"
+    />
+  </changeSet>
+</databaseChangeLog>

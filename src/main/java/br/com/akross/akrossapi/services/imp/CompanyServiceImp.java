@@ -8,7 +8,7 @@ import br.com.akross.akrossapi.controllers.request.UpdateCompanyRequest;
 import br.com.akross.akrossapi.controllers.response.CompanyResponse;
 import br.com.akross.akrossapi.exceptions.ResourceAlreadyRegisteredException;
 import br.com.akross.akrossapi.exceptions.ResourceNotFoundException;
-import br.com.akross.akrossapi.exceptions.UploadPictureException;
+import br.com.akross.akrossapi.exceptions.UploadPhotoException;
 import br.com.akross.akrossapi.models.Company;
 import br.com.akross.akrossapi.models.Photo;
 import br.com.akross.akrossapi.repositories.CompanyRepository;
@@ -104,7 +104,7 @@ public class CompanyServiceImp implements CompanyService {
         filePath
       );
     } catch (IOException e) {
-      throw new UploadPictureException(e.getMessage());
+      throw new UploadPhotoException(e.getMessage());
     }
     return filePath;
   }

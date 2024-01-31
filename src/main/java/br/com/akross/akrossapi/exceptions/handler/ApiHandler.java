@@ -3,7 +3,7 @@ package br.com.akross.akrossapi.exceptions.handler;
 import br.com.akross.akrossapi.exceptions.ResourceAlreadyRegisteredException;
 import br.com.akross.akrossapi.exceptions.ResourceNotFoundException;
 import br.com.akross.akrossapi.exceptions.ResourceNotValidException;
-import br.com.akross.akrossapi.exceptions.UploadPictureException;
+import br.com.akross.akrossapi.exceptions.UploadPhotoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -53,9 +53,9 @@ public class ApiHandler {
       .body(apiError);
   }
 
-  @ExceptionHandler(UploadPictureException.class)
+  @ExceptionHandler(UploadPhotoException.class)
   public ResponseEntity<ApiError> handleResourceNotValidException(
-    UploadPictureException ex
+    UploadPhotoException ex
   ) {
     ApiError apiError = getApiError(ex);
     return ResponseEntity
